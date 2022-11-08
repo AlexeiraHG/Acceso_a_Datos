@@ -2,7 +2,9 @@ package jmx.ad.modelo;
 
 import lombok.*;
 
-import javax.persistence.*; //para la versión 5 de hibernate
+//import javax.persistence.*; peta por que no funciona en hibernate 6
+import jakarta.persistence.*; /*Trabaja con hibernate 6*/
+
 import java.util.Objects;
 
 @Entity
@@ -12,11 +14,13 @@ import java.util.Objects;
 @Builder
 @ToString
 @Table(
-        name = "produc_serial_group_mask",
-        uniqueConstraints = {
-                @UniqueConstraint(columnNames = "dni"),
-        }
+        name = "empleado",
+        uniqueConstraints = @UniqueConstraint(
+                name = "dni_unico",
+                columnNames = {"dni"}
+        )
 )
+@NamedQuery(name = "Empleado.porDepartamentoNombre", query = "select e from empleado Where e.departamento.nombre = ?1")
 public class Empleado {
 
     @Id
@@ -25,6 +29,9 @@ public class Empleado {
     private String nombre;
     private String apellidos;
     private String dni;
+
+    @ManyToOne
+    private Departamento departamento;
 
 
 }

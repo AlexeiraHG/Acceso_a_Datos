@@ -3,7 +3,8 @@ package jmx.ad;
 import jmx.ad.Controlador.MiControlador;
 import jmx.ad.modelo.Empleado;
 
-import javax.persistence.*;
+//import javax.persistence.*; peta por que no funciona en hibernate 6
+import jakarta.persistence.*; /*Trabaja con hibernate 6*/
 import java.util.List;
 
 public class Main {

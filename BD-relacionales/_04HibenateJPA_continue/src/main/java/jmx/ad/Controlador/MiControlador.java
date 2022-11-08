@@ -2,7 +2,9 @@ package jmx.ad.Controlador;
 
 import jmx.ad.modelo.Empleado;
 
-import javax.persistence.*;
+//import javax.persistence.*; peta por que no funciona en hibernate 6
+import jakarta.persistence.*; /*Trabaja con hibernate 6*/
+
 import java.util.List;
 
 public class MiControlador {
@@ -11,8 +13,7 @@ public class MiControlador {
     EntityTransaction transaction;
 
     public MiControlador() {
-        entityManagerFactory = Persistence.
-                createEntityManagerFactory("default");
+        entityManagerFactory = Persistence.createEntityManagerFactory("default");
         entityManager = entityManagerFactory.createEntityManager();
         transaction = entityManager.getTransaction();
     }
@@ -24,13 +25,13 @@ public class MiControlador {
             entityManager.persist(empleado);
             transaction.commit();
         } finally {
-            if (transaction.isActive()){
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
         }
     }
 
-    public void update(Empleado empleadoOld, Empleado empleadoNew){
+    public void update(Empleado empleadoOld, Empleado empleadoNew) {
 
         try {
             Empleado update = entityManager.find(Empleado.class, empleadoOld);
@@ -42,38 +43,44 @@ public class MiControlador {
             transaction.commit();
             System.out.println("Hemos realizado un update");
         } finally {
-            if (transaction.isActive()){
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
         }
 
     }
 
-    public void Delete(Empleado empleado){
+    public void Delete(Empleado empleado) {
         try {
             transaction.begin();
             Empleado aborrar = entityManager.find(Empleado.class, empleado.getId());
             entityManager.remove(aborrar);
             transaction.commit();
         } finally {
-            if (transaction.isActive()){
+            if (transaction.isActive()) {
                 transaction.rollback();
             }
         }
     }
 
 
-    public Empleado Busca(int id){
+    public Empleado Busca(int id) {
         return entityManager.find(Empleado.class, id);
     }
 
-    public List<Empleado> BuscaTodos(){
+    public List<Empleado> BuscaTodos() {
         Query queryTodosEmpleados = entityManager.createQuery("select e from Empleado e");
         return queryTodosEmpleados.getResultList();
     }
 
+    public List<Empleado> buscaEmpleadosPorDepartament(String nombreDepartamento) {
+        return entityManager.createQuery("Empleado.porDepartamentoNombre", Empleado.class)
+                .setParameter(1, nombreDepartamento)
+                .getResultList();
+    }
+
     //Close
-    public void cierra(){
+    public void cierra() {
         entityManager.close();
         entityManagerFactory.close();
     }

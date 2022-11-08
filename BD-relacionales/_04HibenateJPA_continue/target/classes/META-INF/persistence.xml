@@ -13,8 +13,8 @@
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-       <!--Defino las clases que van a usar Hibernate-->
-        <class>jmx.ad.modelo.Empleado</class>
+       <!--Ya no hace falta definir las clases debido a la version alta de hibernate-->
+<!--        <class>jmx.ad.modelo.Empleado</class>-->
 
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/fabrica"/>
