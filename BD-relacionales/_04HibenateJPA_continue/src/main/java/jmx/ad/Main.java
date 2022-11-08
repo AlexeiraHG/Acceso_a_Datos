@@ -1,5 +1,6 @@
 package jmx.ad;
 
+import jmx.ad.Controlador.MiControlador;
 import jmx.ad.modelo.Empleado;
 
 import javax.persistence.*;
@@ -7,14 +8,31 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Creamos las EntityManagerFactory para manejar las entidades y transacciones
 
-        EntityManagerFactory entityManagerFactory = Persistence.
-                createEntityManagerFactory("default");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
+        MiControlador miControlador = new MiControlador();
 
-        try {
+//        Empleado e1 = Empleado.builder().nombre("Lola").apellidos("Garcia").dni("74852665W").build();
+//        miControlador.insert(e1);
+//
+//        Empleado e2 = Empleado.builder().nombre("Debiles").apellidos("Vistor").dni("18445968J").id(1).build();
+//        Empleado e3 = Empleado.builder().nombre("Fuertes").apellidos("Vistor").dni("18445968J").id(1).build();
+//        miControlador.update(e3, e2);
+//
+//        Empleado empleadoBorrar = Empleado.builder().id(3).build();
+//        miControlador.Delete(empleadoBorrar);
+
+        miControlador.Busca(1);
+
+        miControlador.BuscaTodos().forEach(System.out::println);
+
+
+
+
+        miControlador.cierra();
+
+
+        //region lo de antes
+       /* try {
             System.out.println("Select al vuelo");
             Query queryTodosEmpleados = entityManager.createQuery("select e from Empleado e");
             List<Empleado> listaEmpleados = queryTodosEmpleados.getResultList();
@@ -23,9 +41,9 @@ public class Main {
             System.out.println("inserciones de un objeto en BBDD");
 
             Empleado empleadotmp = Empleado.builder().dni("18445968J").nombre("Victor").apellidos("Fuertes").build();
-        transaction.begin();
+        *//*transaction.begin();
         entityManager.persist(empleadotmp);
-        transaction.commit();
+        transaction.commit();*//*
 
             //Update
             System.out.println("actualizando el usuario id=2");
@@ -51,12 +69,8 @@ public class Main {
             }
             entityManager.close();
             entityManagerFactory.close();
-        }
-
-
-
-
-
+        }*/
+        //endregion
 
     }
 }
